@@ -1,29 +1,39 @@
 class Show < ActiveRecord::Base
+
+  # returns the highest value in the ratings column
   def self.highest_rating
-    Show.maximum("rating")
+    self.maximum(:rating)
   end
 
+  #ASC is not needed after default because that it the default. Show.order("rating ASC").last also works
+  # Returns the show with the highest rating
   def self.most_popular_show
-    Show.order("rating").last
+    self.order(:rating).last
   end
 
+  # Returns the lowest value in the ratings column.
   def self.lowest_rating
-    Show.minimum("rating")
+    self.minimum(:rating)
   end
 
+  # Returns the show with the lowest rating.
   def self.least_popular_show
-    Show.order("rating DESC").last
+    self.order(rating: :asc).first
   end
 
+  # Returns the sum of all of the ratings.
   def self.ratings_sum
-    Show.sum("rating")
+    self.sum("rating")
   end
 
+  # Returns a list of all of the shows that have a rating greater than 5.
   def self.popular_shows
-    Show.where("rating > ?", 5)
+    self.where("rating > ?", 5)
   end
 
+  # Returns an array of all of the shows sorted in alphabetical order according to their names.
   def self.shows_by_alphabetical_order
-    Show.order("name ASC")
+    self.order("name ASC")
   end
+
 end
